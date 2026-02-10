@@ -1,5 +1,3 @@
-import Formula1 from "./components/formula1";
-import Formula2 from "./components/formula2";
 import ShapeSphere from "./components/shapeSphere";
 import ShapeCone from "./components/shapeCone";
 import ShapeCube from "./components/shapeCube";
@@ -14,7 +12,6 @@ import ShapeHelicoid from "./components/shapeHelicoid";
 import ShapeParabola2D from "./components/shapeParabola2D";
 import ShapeHyperbola2D from "./components/shapeHyperbola2D";
 import ShapeEllipse2D from "./components/shapeEllipse2D";
-import { useEffect, useState } from "react";
 import NUMERANO from "./components/NUMERANO";
 
 type ShapeItem = {
@@ -22,102 +19,37 @@ type ShapeItem = {
   style: React.CSSProperties;
 };
 
-// Typewriter Animation Component
-const TypewriterAnimation = ({ text, typingSpeed = 150 }: { text: string; typingSpeed?: number }) => {
-  const [displayText, setDisplayText] = useState('');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [showCursor, setShowCursor] = useState(true);
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [showSigma, setShowSigma] = useState(true);
-
-  useEffect(() => {
-    if (currentIndex < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
-      }, typingSpeed);
-      return () => clearTimeout(timeout);
-    } else {
-      // Typing complete - fade out sigma after delay
-      const sigmaTimeout = setTimeout(() => {
-        setShowSigma(false);
-        setIsTypingComplete(true);
-      }, 500);
-      
-      // Blink cursor after typing complete
-      const cursorInterval = setInterval(() => {
-        setShowCursor(prev => !prev);
-      }, 500);
-      
-      return () => {
-        clearTimeout(sigmaTimeout);
-        clearInterval(cursorInterval);
-      };
-    }
-  }, [currentIndex, text, typingSpeed]);
-
-  return (
-    <div className="relative inline-flex items-center">
-      {/* Cosmic background behind text */}
-      <span className="absolute inset-0 -z-10 rounded-xl bg-[radial-gradient(120px_circle_at_30%_40%,rgba(168,85,247,0.25),transparent_60%),radial-gradient(100px_circle_at_70%_60%,rgba(59,130,246,0.2),transparent_65%),linear-gradient(135deg,#050914,#07142a,#090f24)] opacity-80" />
-
-      {/* Subtle border glow */}
-      <span className="absolute inset-0 -z-10 rounded-xl ring-1 ring-cyan-400/25 shadow-[0_0_30px_rgba(99,102,241,0.25)]" />
-
-      {/* Typed text */}
-      <span className="relative inline-block px-6 py-2">
-        {displayText}
-
-        {/* Cursor */}
-        {/* <span
-          className={`absolute -right-4 top-0 h-full w-[3px]
-          bg-gradient-to-b from-cyan-400 via-blue-400 to-purple-400
-          transition-opacity duration-300
-          ${showCursor ? "opacity-100" : "opacity-0"}`}
-        /> */}
-      </span>
-    </div>
-  );
-
-};
 
 export default function HeroSection() {
   const shapes: ShapeItem[] = [
     // { Component: ShapeParaboloid, style: { left: "22%", top: "10%", transform: "rotate(-30deg) scale(0.75)" } },
     // { Component: ShapeHyperboloid, style: { left: "68%", top: "72%", transform: "rotate(28deg) scale(0.9)" } },
 
-    // Top band
     { Component: ShapeCube, style: { left: "8%", top: "12%", transform: "rotate(18deg) scale(0.8)" } },
     { Component: ShapeCylinder, style: { left: "25%", top: "8%", transform: "rotate(-22deg) scale(0.7)" } },
     { Component: ShapeParaboloid, style: { left: "52%", top: "10%", transform: "rotate(-30deg) scale(0.75)" } },
     { Component: ShapeDonut, style: { left: "75%", top: "14%", transform: "rotate(15deg) scale(0.8)" } },
 
-    // Upper-middle band
     { Component: ShapeHyperboloid, style: { left: "12%", top: "32%", transform: "rotate(28deg) scale(0.9)" } },
     { Component: ShapeSphere, style: { left: "35%", top: "28%", transform: "rotate(-20deg) scale(0.75)" } },
     { Component: ShapeOctahedron, style: { left: "65%", top: "30%", transform: "rotate(35deg) scale(0.8)" } },
     { Component: ShapeCone, style: { left: "85%", top: "34%", transform: "rotate(-25deg) scale(0.7)" } },
 
-    // Lower-middle band
-    { Component: ShapeTetrahedron, style: { left: "18%", top: "55%", transform: "rotate(-35deg) scale(0.85)" } },
+    { Component: ShapeTetrahedron, style: { left: "14%", top: "55%", transform: "rotate(-35deg) scale(0.85)" } },
     { Component: ShapeIcosahedron, style: { left: "42%", top: "58%", transform: "rotate(18deg) scale(0.75)" } },
     { Component: ShapeCube, style: { left: "75%", top: "56%", transform: "rotate(-12deg) scale(0.8)" } },
 
-    // left-middle band
     { Component: ShapeEllipse2D, style: { left: "3%", top: "80%", transform: "rotate(30deg) scale(0.8)" } },
     { Component: ShapeEllipse2D, style: { left: "28%", top: "68%", transform: "rotate(-15deg) scale(0.75)" } },
     { Component: ShapeParabola2D, style: { left: "50%", top: "72%", transform: "rotate(20deg) scale(0.8)" } },
     { Component: ShapeParabola2D, style: { left: "80%", top: "68%", transform: "rotate(-22deg) scale(0.75)" } },
 
-    // right-most band
     { Component: ShapeHyperbola2D, style: { left: "88%", top: "50%", transform: "rotate(25deg) scale(0.8)" } },
 
-    // left-most band
     { Component: ShapeHyperbola2D, style: { left: "2%", top: "40%", transform: "rotate(-30deg) scale(0.75)" } },
     { Component: ShapeHelicoid, style: { left: "1%", top: "60%", transform: "rotate(30deg) scale(0.8)" } },
 
 
-    // Bottom band
     { Component: ShapeCylinder, style: { left: "14%", top: "79%", transform: "rotate(22deg) scale(0.75)" } },
     { Component: ShapeDonut, style: { left: "32%", top: "78%", transform: "rotate(-28deg) scale(0.8)" } },
     { Component: ShapeSphere, style: { left: "60%", top: "80%", transform: "rotate(30deg) scale(0.75)" } },
@@ -126,7 +58,6 @@ export default function HeroSection() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden">
-      {/* Scoped styles */}
       <style>{`
         @keyframes gradientMove {
           0% { background-position: 0% 50%; }
@@ -185,22 +116,18 @@ export default function HeroSection() {
         }
       `}</style>
 
-      {/* Background */}
       <div className="absolute inset-0 hero-bg" />
       <div className="absolute inset-0 pointer-events-none vignette" />
 
-      {/* SHAPES (rendered via map) */}
       {shapes.map(({ Component, style }, index) => (
         <div key={index} className="shape" style={style}>
           <Component />
         </div>
       ))}
 
-        {/* CENTER CONTENT */}
         <div className="relative z-30 h-full flex flex-col items-center justify-center text-center px-4 pointer-events-none">
             <div className="pointer-events-auto relative">
-                {/* Animated floating particles */}
-                <div className="absolute inset-0 overflow-hidden rounded-full">
+              <div className="absolute inset-0 overflow-hidden rounded-full">
                 {[...Array(8)].map((_, i) => (
                     <div
                     key={i}
@@ -213,15 +140,12 @@ export default function HeroSection() {
                     }}
                     />
                 ))}
-                </div>
+              </div>
 
               <div className="pointer-events-auto">
                 <NUMERANO />
               </div>
 
-
-
-              {/* Subtitle with enhanced typography */}
               <div className="relative mb-12 max-w-[700px] mx-auto text-center">
                 <p className="mx-auto text-gray-200 text-[1.2rem] md:text-[1.4rem] font-light leading-relaxed text-center">
                   By{" "}
