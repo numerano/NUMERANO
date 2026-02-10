@@ -1,3 +1,4 @@
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -5,6 +6,7 @@ import Activities from './pages/Activities';
 import Faculty from './pages/Faculty';
 import Members from './pages/Members';
 import Feedback from './pages/Feedback';
+import BrainBuffPage from './pages/BrainBuffPage';
 import { motion, useScroll, useSpring } from 'framer-motion';
 
 function App() {
@@ -26,25 +28,18 @@ function App() {
       <Navbar />
 
       <main className="flex-grow">
-        <section id="home">
-          <Home />
-        </section>
-
-        <section id="activities">
-          <Activities />
-        </section>
-
-        <section id="faculty">
-          <Faculty />
-        </section>
-
-        <section id="members">
-          <Members />
-        </section>
-
-        <section id="feedback">
-          <Feedback />
-        </section>
+        <Routes>
+          <Route path="/" element={
+            <>
+              <section id="home"><Home /></section>
+              <section id="activities"><Activities /></section>
+              <section id="faculty"><Faculty /></section>
+              <section id="members"><Members /></section>
+              <section id="feedback"><Feedback /></section>
+            </>
+          } />
+          <Route path="/brainbuff" element={<BrainBuffPage />} />
+        </Routes>
       </main>
 
       <Footer />

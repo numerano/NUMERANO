@@ -19,7 +19,17 @@ export default function Navbar() {
         }
     });
 
-    const scrollToSection = (id: string) => {
+    const navigate = (id: string) => {
+        if (id === 'BrainBuff') {
+            window.location.href = '/brainbuff';
+            return;
+        }
+
+        if (window.location.pathname !== '/') {
+            window.location.href = '/#' + id;
+            return;
+        }
+
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth' });
@@ -30,10 +40,10 @@ export default function Navbar() {
     const navLinks = [
         { name: 'Home', id: 'home' },
         { name: 'Activities', id: 'activities' },
-        { name: 'BrainBuff', id: 'BrainBuff' },
         { name: 'Faculty', id: 'faculty' },
         { name: 'Members', id: 'members' },
         { name: 'Feedback', id: 'feedback' },
+        { name: 'BrainBuff', id: 'BrainBuff' },
     ];
 
     return (
@@ -48,7 +58,7 @@ export default function Navbar() {
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
-                    <div className="flex items-center cursor-pointer" onClick={() => scrollToSection('home')}>
+                    <div className="flex items-center cursor-pointer" onClick={() => navigate('home')}>
                         <span className="text-2xl font-bold tracking-wider hover:text-blue-200 transition">
                             NUMERANO
                         </span>
@@ -58,7 +68,7 @@ export default function Navbar() {
                             {navLinks.map((link) => (
                                 <button
                                     key={link.name}
-                                    onClick={() => scrollToSection(link.id)}
+                                    onClick={() => navigate(link.id)}
                                     className="hover:bg-blue-800 px-3 py-2 rounded-md transition text-sm font-medium focus:outline-none"
                                 >
                                     {link.name}
@@ -84,7 +94,7 @@ export default function Navbar() {
                         {navLinks.map((link) => (
                             <button
                                 key={link.name}
-                                onClick={() => scrollToSection(link.id)}
+                                onClick={() => navigate(link.id)}
                                 className="block w-full text-left hover:bg-blue-800 px-3 py-2 rounded-md text-base font-medium"
                             >
                                 {link.name}

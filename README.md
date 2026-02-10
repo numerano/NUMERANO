@@ -45,6 +45,21 @@ docker-compose up --build
 -   **Frontend**: [http://localhost:5173](http://localhost:5173)
 -   **Backend**: [http://localhost:8000](http://localhost:8000)
 
+## 🧠 BrainBuff Feature
+
+This project now includes **BrainBuff**, a weekly math/logic challenge generator powered by Google's Gemini API.
+- Accessible at: `/brainbuff`
+- Features: 5-minute timer, hints, and dynamic question generation.
+
+### Gemini API Setup
+This feature requires a valid Google Gemini API key.
+1. Get a key from [Google AI Studio](https://aistudio.google.com/).
+2. Add it to `server/.env`:
+   ```bash
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+   *Note: The system uses `gemini-2.5-flash` for generation.*
+
 ### 4. Running Locally
 
 **Backend:**
