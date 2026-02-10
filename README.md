@@ -14,3 +14,71 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/numerano-feedback.git
+cd numerano-feedback
+```
+
+### 2. Environment Setup
+
+Copy the example environment file in the `server` directory and update it with your credentials:
+
+```bash
+cp server/.env.example server/.env
+```
+
+Open `server/.env` and replace `your_mongodb_atlas_connection_string` with your actual MongoDB URI.
+
+### 3. Running with Docker (Recommended)
+
+Run the following command to build and start the application:
+
+```bash
+docker-compose up --build
+```
+
+-   **Frontend**: [http://localhost:5173](http://localhost:5173)
+-   **Backend**: [http://localhost:8000](http://localhost:8000)
+
+### 4. Running Locally
+
+**Backend:**
+
+```bash
+cd server
+npm install
+npm run dev
+```
+
+**Frontend:**
+
+```bash
+# In a new terminal
+npm install
+npm run dev
+```
+
+## API Endpoints
+
+-   `POST /api/feedback`: Submit feedback.
+-   `GET /api/health`: Health check.
+
+## Project Structure
+
+```
+.
+├── server/                 # Backend (Node.js/Express)
+│   ├── config/             # Database configuration
+│   ├── controllers/        # Route controllers
+│   ├── models/             # Mongoose models
+│   ├── routes/             # API routes
+│   └── index.js            # Entry point
+├── src/                    # Frontend (React/Vite)
+├── docker-compose.yml      # Docker orchestration
+└── Dockerfile              # Frontend Dockerfile
+```
