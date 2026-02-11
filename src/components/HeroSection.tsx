@@ -19,12 +19,8 @@ type ShapeItem = {
   style: React.CSSProperties;
 };
 
-
 export default function HeroSection() {
   const shapes: ShapeItem[] = [
-    // { Component: ShapeParaboloid, style: { left: "22%", top: "10%", transform: "rotate(-30deg) scale(0.75)" } },
-    // { Component: ShapeHyperboloid, style: { left: "68%", top: "72%", transform: "rotate(28deg) scale(0.9)" } },
-
     { Component: ShapeCube, style: { left: "8%", top: "12%", transform: "rotate(18deg) scale(0.8)" } },
     { Component: ShapeCylinder, style: { left: "25%", top: "8%", transform: "rotate(-22deg) scale(0.7)" } },
     { Component: ShapeParaboloid, style: { left: "52%", top: "10%", transform: "rotate(-30deg) scale(0.75)" } },
@@ -49,7 +45,6 @@ export default function HeroSection() {
     { Component: ShapeHyperbola2D, style: { left: "2%", top: "40%", transform: "rotate(-30deg) scale(0.75)" } },
     { Component: ShapeHelicoid, style: { left: "1%", top: "60%", transform: "rotate(30deg) scale(0.8)" } },
 
-
     { Component: ShapeCylinder, style: { left: "14%", top: "79%", transform: "rotate(22deg) scale(0.75)" } },
     { Component: ShapeDonut, style: { left: "32%", top: "78%", transform: "rotate(-28deg) scale(0.8)" } },
     { Component: ShapeSphere, style: { left: "60%", top: "80%", transform: "rotate(30deg) scale(0.75)" } },
@@ -65,9 +60,136 @@ export default function HeroSection() {
           100% { background-position: 0% 50%; }
         }
 
+        @keyframes float {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          50% { transform: translateY(-10px) translateX(5px); }
+        }
+
+        /* Mathematical Equations Background - EXACT copy from second page */
+        .math-bg {
+          background-color: #0a0e1a;
+          background-image:
+            /* Primary layer: Famous equations */
+            url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='150' y='150' font-size='20' font-family='Cambria Math, serif' fill='rgba(59,130,246,0.15)' text-anchor='middle'%3EE = mc²%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='350' height='350' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='175' y='175' font-size='22' font-family='Cambria Math, serif' fill='rgba(168,85,247,0.12)' text-anchor='middle'%3Ee^{iπ} + 1 = 0%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='280' height='280' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='140' y='140' font-size='18' font-family='Cambria Math, serif' fill='rgba(34,211,238,0.1)' text-anchor='middle'%3Eφ = (1+√5)/2%3C/text%3E%3C/svg%3E"),
+            
+            /* Secondary layer: Calculus equations */
+            url("data:image/svg+xml,%3Csvg width='380' height='380' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='190' y='190' font-size='16' font-family='monospace' fill='rgba(245,158,11,0.08)' text-anchor='middle'%3E∫_a^b f'(x) dx = f(b)-f(a)%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='320' height='320' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='160' y='160' font-size='14' font-family='monospace' fill='rgba(16,185,129,0.09)' text-anchor='middle'%3Ef'(x)=lim_{h→0} (f(x+h)-f(x))/h%3C/text%3E%3C/svg%3E"),
+            
+            /* Tertiary layer: Geometry formulas */
+            url("data:image/svg+xml,%3Csvg width='260' height='260' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='130' y='130' font-size='24' font-family='Cambria Math, serif' fill='rgba(239,68,68,0.08)' text-anchor='middle'%3Ea² + b² = c²%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='340' height='340' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='170' y='170' font-size='16' font-family='monospace' fill='rgba(139,92,246,0.07)' text-anchor='middle'%3E∇²φ = 1/c² ∂²φ/∂t²%3C/text%3E%3C/svg%3E"),
+            
+            /* Background gradients */
+            radial-gradient(
+              ellipse at 30% 20%,
+              rgba(59, 130, 246, 0.12) 0%,
+              transparent 60%
+            ),
+            radial-gradient(
+              ellipse at 80% 70%,
+              rgba(168, 85, 247, 0.1) 0%,
+              transparent 60%
+            ),
+            radial-gradient(
+              circle at 50% 50%,
+              rgba(34, 211, 238, 0.08) 0%,
+              transparent 70%
+            ),
+            
+            /* Graph grid overlay */
+            linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+          
+          background-size: 
+            300px 300px,
+            350px 350px,
+            280px 280px,
+            380px 380px,
+            320px 320px,
+            260px 260px,
+            340px 340px,
+            100% 100%,
+            100% 100%,
+            100% 100%,
+            40px 40px,
+            40px 40px;
+          
+          background-position: 
+            10% 15%,
+            85% 30%,
+            25% 65%,
+            70% 80%,
+            40% 40%,
+            15% 85%,
+            75% 60%,
+            0 0,
+            0 0,
+            0 0,
+            0 0,
+            0 0;
+        }
+
+        /* Mathematical symbols overlay - EXACT copy from second page */
+        .math-symbols-overlay {
+          position: absolute;
+          inset: 0;
+          background-image: 
+            url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50' y='50' font-size='40' font-family='Cambria Math' fill='rgba(59,130,246,0.03)' text-anchor='middle'%3E∑%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50' y='50' font-size='36' font-family='Cambria Math' fill='rgba(168,85,247,0.03)' text-anchor='middle'%3E∫%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50' y='50' font-size='32' font-family='Cambria Math' fill='rgba(34,211,238,0.03)' text-anchor='middle'%3Eπ%3C/text%3E%3C/svg%3E"),
+            url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50' y='50' font-size='38' font-family='Cambria Math' fill='rgba(245,158,11,0.03)' text-anchor='middle'%3E∞%3C/text%3E%3C/svg%3E");
+          background-size: 200px 200px, 180px 180px, 160px 160px, 190px 190px;
+          background-position: 
+            20% 25%,
+            75% 40%,
+            35% 70%,
+            80% 75%;
+          opacity: 0.3;
+          pointer-events: none;
+          z-index: 1;
+        }
+
+        /* Animated equation particles - EXACT copy from second page */
+        .equation-particles {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          overflow: hidden;
+          z-index: 2;
+        }
+
+        .equation-particle {
+          position: absolute;
+          font-family: 'Cambria Math', serif;
+          font-size: 14px;
+          color: rgba(59, 130, 246, 0.2);
+          white-space: nowrap;
+          animation: float-equation 20s linear infinite;
+          pointer-events: none;
+        }
+
+        @keyframes float-equation {
+          0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+          }
+          10% {
+            opacity: 0.3;
+          }
+          90% {
+            opacity: 0.3;
+          }
+          100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
         .hero-bg {  
           background:
-            /* soft nebula highlights */
             radial-gradient(
               600px circle at 30% 35%,
               rgba(168, 85, 247, 0.22),
@@ -83,8 +205,6 @@ export default function HeroSection() {
               rgba(147, 51, 234, 0.18),
               transparent 70%
             ),
-
-            /* main cosmic base */
             linear-gradient(
               135deg,
               #050914 0%,
@@ -92,6 +212,8 @@ export default function HeroSection() {
               #0b1f3a 55%,
               #090f24 100%
             );
+          position: relative;
+          z-index: 3;
         }
 
         .vignette {
@@ -100,6 +222,8 @@ export default function HeroSection() {
             rgba(0,0,0,0) 0%,
             rgba(0,0,0,0.65) 100%
           );
+          position: relative;
+          z-index: 4;
         }
 
         .shape {
@@ -116,8 +240,49 @@ export default function HeroSection() {
         }
       `}</style>
 
-      <div className="absolute inset-0 hero-bg" />
-      <div className="absolute inset-0 pointer-events-none vignette" />
+      {/* EXACT mathematical background from second page - at the very back */}
+      <div className="absolute inset-0 math-bg" style={{ zIndex: 0 }} />
+      <div className="absolute inset-0 math-symbols-overlay" style={{ zIndex: 1 }} />
+      <div className="absolute inset-0 equation-particles" style={{ zIndex: 2 }}>
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className="equation-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${i * 1.5}s`,
+              animationDuration: `${15 + Math.random() * 15}s`,
+              fontSize: `${12 + Math.random() * 6}px`,
+              color: `rgba(${
+                Math.random() > 0.5 ? '59,130,246' : 
+                Math.random() > 0.5 ? '168,85,247' : '34,211,238'
+              }, ${0.1 + Math.random() * 0.2})`
+            }}
+          >
+            {[
+              '∇·E = ρ/ε₀',
+              'F = ma',
+              'PV = nRT',
+              'HΨ = EΨ',
+              'x = [-b ± √(b²-4ac)]/2a',
+              'sin²θ + cos²θ = 1',
+              '∫e^x dx = e^x + C',
+              '∇×E = -∂B/∂t',
+              'A = πr²',
+              'V = (4/3)πr³',
+              'E = hf',
+              'z = x + iy',
+              'det(A - λI) = 0',
+              'f(x) = ∑a_n xⁿ',
+              '∂u/∂t = α∇²u'
+            ][i % 15]}
+          </div>
+        ))}
+      </div>
+
+      {/* Original first page layers - with higher z-index */}
+      {/* <div className="absolute inset-0 hero-bg" style={{ zIndex: 3 }} /> */}
+      <div className="absolute inset-0 pointer-events-none vignette" style={{ zIndex: 4 }} />
 
       {shapes.map(({ Component, style }, index) => (
         <div key={index} className="shape" style={style}>

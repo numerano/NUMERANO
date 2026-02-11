@@ -138,7 +138,7 @@ export default function NUMERANO() {
       
       const animate = () => {
         const time = Date.now() * 0.001;
-        const pulse = 0.45 + Math.sin(time * 0.8) * 0.15;
+        const pulse = 0.7 + Math.sin(time * 0.8) * 0.15;
         
         sigma.style.opacity = pulse.toString();
         animationId = requestAnimationFrame(animate);
