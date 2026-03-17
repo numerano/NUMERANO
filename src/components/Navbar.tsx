@@ -50,7 +50,7 @@ export default function Navbar() {
             }}
             animate={hidden ? "hidden" : "visible"}
             transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="bg-numerano-navy text-white shadow-lg fixed w-full z-50 transition-all duration-300"
+            className="bg-slate-900/80 backdrop-blur-md text-white shadow-lg fixed w-full z-50 transition-all duration-300 border-b border-cyan-500/20"
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
@@ -85,7 +85,7 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {isOpen && (
-                <div className="md:hidden bg-numerano-navy border-t border-blue-800 shadow-xl">
+                <div className="md:hidden bg-slate-900/90 backdrop-blur-md border-t border-cyan-500/20 shadow-xl">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         {navLinks.map((link) => (
                             <button

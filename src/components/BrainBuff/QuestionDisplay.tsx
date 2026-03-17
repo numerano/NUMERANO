@@ -13,13 +13,13 @@ interface QuestionDisplayProps {
         question: string;
         options: Option[];
         correctAnswer: string;
-        explanation: string;
         hint?: string;
     };
     onSelect: (optionId: string) => void;
     selectedOption: string | null;
     isCorrect: boolean | null;
     showResult: boolean;
+    timeUp: boolean;
     hintRevealed: boolean;
     onHintClick: () => void;
 }
@@ -30,6 +30,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
     selectedOption,
     isCorrect,
     showResult,
+    timeUp,
     hintRevealed,
     onHintClick
 }) => {
@@ -48,30 +49,68 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
         show: { y: 0, opacity: 1 }
     };
 
+    const getOptionStyle = (optId: string): string => {
+        if (!showResult) {
+            return 'border-cyan-500/30 hover:border-cyan-400 hover:bg-cyan-500/10 text-white cursor-pointer';
+        }
+
+        // After result is shown
+        if (selectedOption === optId) {
+            return isCorrect
+                ? 'border-green-500 bg-green-500/20 text-green-300 ring-2 ring-green-500/50'
+                : 'border-red-500 bg-red-500/20 text-red-300 ring-2 ring-red-500/50';
+        }
+
+        // Highlight the correct answer if user was wrong or time ran out
+        if (optId === data.correctAnswer && (!isCorrect || timeUp)) {
+            return 'border-green-500 bg-green-500/20 text-green-300 ring-2 ring-green-500/50';
+        }
+
+        return 'border-slate-600/30 text-slate-500 cursor-default opacity-50';
+    };
+
+    const getBadgeStyle = (optId: string): string => {
+        if (!showResult) {
+            return 'bg-cyan-500/20 text-cyan-400';
+        }
+
+        if (selectedOption === optId) {
+            return isCorrect
+                ? 'bg-green-500/30 text-green-300'
+                : 'bg-red-500/30 text-red-300';
+        }
+
+        if (optId === data.correctAnswer && (!isCorrect || timeUp)) {
+            return 'bg-green-500/30 text-green-300';
+        }
+
+        return 'bg-slate-700/50 text-slate-500';
+    };
+
     return (
         <motion.div
             variants={container}
             initial="hidden"
             animate="show"
-            className="bg-white p-8 rounded-2xl shadow-xl max-w-2xl mx-auto border border-gray-100"
+            className="bg-slate-800/40 backdrop-blur-xl p-8 rounded-2xl shadow-2xl shadow-cyan-500/10 max-w-2xl mx-auto border border-cyan-500/20"
         >
             <div className="flex justify-between items-center mb-4">
-                <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide">
+                <span className="bg-cyan-500/20 text-cyan-400 text-xs font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wide">
                     {data.category}
                 </span>
-                <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${data.difficulty === 'Hard' ? 'bg-red-100 text-red-800' :
-                    data.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
+                <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wide ${data.difficulty === 'Hard' ? 'bg-red-500/20 text-red-400' :
+                    data.difficulty === 'Medium' ? 'bg-yellow-500/20 text-yellow-400' :
+                        'bg-green-500/20 text-green-400'
                     }`}>
                     {data.difficulty}
                 </span>
             </div>
 
-            <motion.h2 variants={item} className="text-2xl font-bold text-gray-900 mb-2">
+            <motion.h2 variants={item} className="text-2xl font-bold text-white mb-2">
                 {data.title}
             </motion.h2>
 
-            <motion.p variants={item} className="text-lg text-gray-700 mb-8 leading-relaxed">
+            <motion.p variants={item} className="text-lg text-cyan-200/70 mb-8 leading-relaxed whitespace-pre-line">
                 {data.question}
             </motion.p>
 
@@ -81,7 +120,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
                     {!hintRevealed ? (
                         <button
                             onClick={onHintClick}
-                            className="text-sm text-blue-600 hover:text-blue-800 underline font-medium flex items-center transition-colors"
+                            className="text-sm text-cyan-400 hover:text-cyan-300 underline font-medium flex items-center transition-colors"
                         >
                             <span className="mr-1">💡</span> Need a hint?
                         </button>
@@ -89,7 +128,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
                         <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: 'auto' }}
-                            className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 text-sm text-yellow-800 flex items-start"
+                            className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-3 text-sm text-cyan-200/70 flex items-start"
                         >
                             <span className="mr-2">💡</span>
                             <span>{data.hint}</span>
@@ -98,7 +137,7 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
                 </motion.div>
             )}
 
-            <div className="space-y-4">
+            <div className="space-y-3">
                 {data.options.map((opt) => (
                     <motion.button
                         key={opt.id}
@@ -107,19 +146,9 @@ const QuestionDisplay: React.FC<QuestionDisplayProps> = ({
                         whileTap={!showResult ? { scale: 0.98 } : {}}
                         onClick={() => !showResult && onSelect(opt.id)}
                         disabled={showResult}
-                        className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 flex items-center ${selectedOption === opt.id
-                            ? (isCorrect
-                                ? 'border-green-500 bg-green-50 text-green-900'
-                                : 'border-red-500 bg-red-50 text-red-900')
-                            : showResult && opt.id === data.correctAnswer // Show correct answer if wrong selected
-                                ? 'border-green-500 bg-green-50 text-green-900 ring-2 ring-green-300' // Highlight correct answer
-                                : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                            }`}
+                        className={`w-full p-4 text-left rounded-xl border-2 transition-all duration-300 flex items-center ${getOptionStyle(opt.id)}`}
                     >
-                        <span className={`w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold ${selectedOption === opt.id
-                            ? (isCorrect ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800')
-                            : 'bg-gray-100 text-gray-600'
-                            }`}>
+                        <span className={`w-8 h-8 flex items-center justify-center rounded-full mr-4 font-bold text-sm ${getBadgeStyle(opt.id)}`}>
                             {opt.id}
                         </span>
                         <span className="font-medium text-lg">{opt.text}</span>

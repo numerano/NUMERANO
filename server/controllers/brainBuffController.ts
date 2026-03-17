@@ -1,25 +1,7 @@
 import { Request, Response } from 'express';
 import BrainBuff, { IBrainBuff } from '../models/BrainBuff';
 import { generateBrainBuffQuestion } from '../services/geminiService';
-
-const getWeekNumber = (date: Date): number => {
-    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-    const dayNr = (d.getDay() + 6) % 7;
-    d.setDate(d.getDate() - dayNr + 3);
-    const firstThursday = d.valueOf();
-    d.setMonth(0, 1);
-    if (d.getDay() !== 4) {
-        d.setMonth(0, 1 + ((4 - d.getDay() + 7) % 7));
-    }
-    return 1 + Math.ceil((firstThursday - d.valueOf()) / 604800000);
-};
-
-const getCurrentWeekId = (): string => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const week = getWeekNumber(date);
-    return `${year}-W${week.toString().padStart(2, '0')}`;
-};
+import { getWeekId } from '../utils/dateHelpers';
 
 export const getCurrentBrainBuff = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -35,7 +17,7 @@ export const getCurrentBrainBuff = async (req: Request, res: Response): Promise<
 
             try {
                 const generatedData = await generateBrainBuffQuestion('Medium');
-                const weekId = getCurrentWeekId();
+                const weekId = getWeekId();
                 const nextWeek = new Date();
                 nextWeek.setDate(nextWeek.getDate() + 7);
 
@@ -70,7 +52,7 @@ export const getCurrentBrainBuff = async (req: Request, res: Response): Promise<
 export const forceGenerateBrainBuff = async (req: Request, res: Response): Promise<void> => {
     try {
         const generatedData = await generateBrainBuffQuestion('Medium');
-        const weekId = getCurrentWeekId() + '-' + Date.now();
+        const weekId = getWeekId() + '-' + Date.now();
 
         const nextWeek = new Date();
         nextWeek.setDate(nextWeek.getDate() + 7);

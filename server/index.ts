@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import connectDB from './config/db';
 import { errorHandler } from './middleware/errorMiddleware';
 import feedbackRoutes from './routes/feedbackRoutes';
+import brainBuffRoutes from './routes/brainBuffRoutes';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use('/api/feedback', feedbackRoutes);
+app.use('/api/brainbuff', brainBuffRoutes);
 
 app.get('/api/health', (req: Request, res: Response) => {
     res.json({ status: 'ok', message: 'Backend is running' });
